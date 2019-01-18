@@ -1,0 +1,10 @@
+需要用到的库函数有：
+stm32f10x_tim.c
+stm32f10x_rcc.c
+misc.c
+
+主程序需要添加
+#include "SysTick.h"
+
+主函数需要加上时钟初始化：
+SysTick_Init(72);

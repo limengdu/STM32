@@ -1,0 +1,5 @@
+需要用到的库函数有：
+stm32f10x_gpio.c
+
+主程序需要添加
+#include "system.h"

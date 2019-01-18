@@ -1,0 +1,15 @@
+所需要的库函数有：
+stm32f10x_gpio.c
+stm32f10x_rcc.c
+misc.c
+
+主程序中要有：
+#include "key.h"
+#include "system.h"
+#include "SysTick.h"
+
+主程序中要有：
+KEY_Init();
+SysTick_Init(72);
+
+因为需要使用到延时来消抖，同时需要用位带操作来实现取反操作（点灯为例），所以需要的东西如上。

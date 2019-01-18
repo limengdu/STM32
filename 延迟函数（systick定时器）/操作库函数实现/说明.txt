@@ -1,0 +1,24 @@
+需要的库：
+stm32f10x_systick.c
+stm32f10x_rcc.c
+misc.c
+
+
+为了避免重复定义，需要在misc.c中加入【if 0】和【endif】（文件夹有修改后的misc.c）：
+
+if 0
+void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource)
+{
+  /* Check the parameters */
+  assert_param(IS_SYSTICK_CLK_SOURCE(SysTick_CLKSource));
+  if (SysTick_CLKSource == SysTick_CLKSource_HCLK)
+  {
+    SysTick->CTRL |= SysTick_CLKSource_HCLK;
+  }
+  else
+  {
+    SysTick->CTRL &= SysTick_CLKSource_HCLK_Div8;
+  }
+}
+#endif
+

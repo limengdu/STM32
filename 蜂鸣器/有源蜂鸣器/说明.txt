@@ -1,0 +1,11 @@
+有源蜂鸣器上电即可发声，编写方法与点灯类似
+
+需要使用的库函数包括
+stm32f10x_gpio.c
+stm32f10x_rcc.c
+
+主程序需要添加
+#include "beep.h"
+
+主函数要加上LED初始化：
+BEEP_Init();

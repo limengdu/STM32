@@ -1,0 +1,15 @@
+所需要的库函数有：
+stm32f10x_gpio.c
+stm32f10x_rcc.c
+misc.c
+
+主程序中要有：
+#include "key.h"
+#include "system.h"
+#include "SysTick.h"
+
+主程序中要有：
+KEY_Init();
+SysTick_Init(72);
+
+因为需要使用到延时来消抖，位带操作可以简便操作多按键，因此需要以上内容。

@@ -1,0 +1,6 @@
+无源蜂鸣器需要外部给予一个频率才能运作，因此需要用到SysTick定时器
+
+需要使用的库函数包括
+stm32f10x_gpio.c
+stm32f10x_rcc.c
+misc.c

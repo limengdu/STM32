@@ -1,0 +1,118 @@
+#ifndef __TIM_H_
+#define __TIM_H_
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32f10x.h"  
+
+//电机驱动IO定义 
+/* 
+FRONT_LEFT_F_PIN	PG13	左前前进IO
+FRONT_LEFT_B_PIN	PG11	左前后退IO
+
+FRONT_RIGHT_F_PIN	PC11	右前前进IO
+FRONT_RIGHT_B_PIN	PD0	    右前后退IO
+
+BEHIND_LEFT_F_PIN	PD6	    左后前进IO
+BEHIND_LEFT_B_PIN	PG9	    左后后退IO
+
+右后电机的两个控制IO这里改为两路使能EN1、EN2，高电平有效
+BEHIND_RIGHT_F_PIN	PD4	    右电机使能IO
+BEHIND_RIGHT_B_PIN	PD2	    左电机使能IO
+ */
+#define FRONT_LEFT_F_PIN    GPIO_Pin_13
+#define FRONT_LEFT_F_GPIO   GPIOG
+#define FRONT_LEFT_F_SET    GPIO_SetBits(FRONT_LEFT_F_GPIO , FRONT_LEFT_F_PIN)
+#define FRONT_LEFT_F_RESET  GPIO_ResetBits(FRONT_LEFT_F_GPIO , FRONT_LEFT_F_PIN)
+
+#define FRONT_LEFT_B_PIN    GPIO_Pin_11
+#define FRONT_LEFT_B_GPIO   GPIOG
+#define FRONT_LEFT_B_SET    GPIO_SetBits(FRONT_LEFT_B_GPIO , FRONT_LEFT_B_PIN)
+#define FRONT_LEFT_B_RESET  GPIO_ResetBits(FRONT_LEFT_B_GPIO , FRONT_LEFT_B_PIN)
+
+#define FRONT_RIGHT_F_PIN   GPIO_Pin_11
+#define FRONT_RIGHT_F_GPIO  GPIOC
+#define FRONT_RIGHT_F_SET   GPIO_SetBits(FRONT_RIGHT_F_GPIO , FRONT_RIGHT_F_PIN)
+#define FRONT_RIGHT_F_RESET GPIO_ResetBits(FRONT_RIGHT_F_GPIO , FRONT_RIGHT_F_PIN)
+
+#define FRONT_RIGHT_B_PIN   GPIO_Pin_0
+#define FRONT_RIGHT_B_GPIO  GPIOD
+#define FRONT_RIGHT_B_SET   GPIO_SetBits(FRONT_RIGHT_B_GPIO , FRONT_RIGHT_B_PIN)
+#define FRONT_RIGHT_B_RESET GPIO_ResetBits(FRONT_RIGHT_B_GPIO , FRONT_RIGHT_B_PIN)
+
+#define BEHIND_LEFT_F_PIN   GPIO_Pin_6
+#define BEHIND_LEFT_F_GPIO  GPIOD
+#define BEHIND_LEFT_F_SET   GPIO_SetBits(BEHIND_LEFT_F_GPIO , BEHIND_LEFT_F_PIN)
+#define BEHIND_LEFT_F_RESET GPIO_ResetBits(BEHIND_LEFT_F_GPIO , BEHIND_LEFT_F_PIN)
+
+#define BEHIND_LEFT_B_PIN   GPIO_Pin_9
+#define BEHIND_LEFT_B_GPIO  GPIOG
+#define BEHIND_LEFT_B_SET   GPIO_SetBits(BEHIND_LEFT_B_GPIO , BEHIND_LEFT_B_PIN)
+#define BEHIND_LEFT_B_RESET GPIO_ResetBits(BEHIND_LEFT_B_GPIO , BEHIND_LEFT_B_PIN)
+
+#define BEHIND_RIGHT_F_PIN  GPIO_Pin_4
+#define BEHIND_RIGHT_F_GPIO GPIOD
+#define BEHIND_RIGHT_F_SET  GPIO_SetBits(BEHIND_RIGHT_F_GPIO , BEHIND_RIGHT_F_PIN)
+#define BEHIND_RIGHT_F_RESET GPIO_ResetBits(BEHIND_RIGHT_F_GPIO , BEHIND_RIGHT_F_PIN)
+
+#define BEHIND_RIGHT_B_PIN  GPIO_Pin_2
+#define BEHIND_RIGHT_B_GPIO GPIOD
+#define BEHIND_RIGHT_B_SET  GPIO_SetBits(BEHIND_RIGHT_B_GPIO , BEHIND_RIGHT_B_PIN)
+#define BEHIND_RIGHT_B_RESET GPIO_ResetBits(BEHIND_RIGHT_B_GPIO , BEHIND_RIGHT_B_PIN)
+
+
+//测速
+/* 
+速度码盘右	FRONT_RIGHT_S_PIN	PA11
+速度码盘左	FRONT_LEFT_S_PIN	PA12
+ */
+#define FRONT_RIGHT_S_PIN  GPIO_Pin_11
+#define FRONT_RIGHT_S_GPIO GPIOA
+#define FRONT_RIGHT_S_IO GPIO_ReadInputDataBit(FRONT_RIGHT_S_GPIO, FRONT_RIGHT_S_PIN)
+
+#define FRONT_LEFT_S_PIN  GPIO_Pin_12
+#define FRONT_LEFT_S_GPIO GPIOA
+#define FRONT_LEFT_S_IO GPIO_ReadInputDataBit(FRONT_LEFT_S_GPIO, FRONT_LEFT_S_PIN)
+
+//左前
+#define FRONT_LEFT_GO      FRONT_LEFT_F_SET; FRONT_LEFT_B_RESET//前进
+#define FRONT_LEFT_BACK    FRONT_LEFT_F_RESET; FRONT_LEFT_B_SET//后退
+#define FRONT_LEFT_STOP    FRONT_LEFT_F_RESET; FRONT_LEFT_B_RESET//停止
+
+//右前
+#define FRONT_RIGHT_GO     FRONT_RIGHT_F_SET;  FRONT_RIGHT_B_RESET
+#define FRONT_RIGHT_BACK   FRONT_RIGHT_F_RESET;FRONT_RIGHT_B_SET
+#define FRONT_RIGHT_STOP   FRONT_RIGHT_F_RESET;FRONT_RIGHT_B_RESET
+
+//左后
+#define BEHIND_LEFT_GO     BEHIND_LEFT_F_SET;BEHIND_LEFT_B_RESET
+#define BEHIND_LEFT_BACK   BEHIND_LEFT_F_RESET;BEHIND_LEFT_B_SET
+#define BEHIND_LEFT_STOP   BEHIND_LEFT_F_RESET;BEHIND_LEFT_B_RESET
+
+//右后
+#define BEHIND_RIGHT_GO    BEHIND_RIGHT_F_SET;BEHIND_RIGHT_B_RESET
+#define BEHIND_RIGHT_BACK  BEHIND_RIGHT_F_RESET;BEHIND_RIGHT_B_SET
+#define BEHIND_RIGHT_STOP  BEHIND_RIGHT_F_RESET;BEHIND_RIGHT_B_RESET
+
+#define BEHIND_RIGHT_EN    BEHIND_RIGHT_F_SET;BEHIND_RIGHT_B_SET        
+/*小车由于左右两边各用一个驱动，所有左边两个电机只需要左后控制，
+右边电机只需右前控制，这里将右后电机控制脚当电机使能*/
+
+#define SPEED_DUTY 25   //“占”的值,数值越大,速度越快,值不可超过speed_count的值
+
+//指令定义
+#define COMM_STOP  'I'             //停止
+#define COMM_UP    'A'             //前进
+#define COMM_DOWN  'B'             //后退
+#define COMM_LEFT  'C'             //左转
+#define COMM_RIGHT 'D'             //右转
+
+extern unsigned char tick_5ms;     //5ms计数器，作为主函数的基本周期
+extern unsigned char tick_1ms;     //1ms计数器，作为电机的基本计数器
+extern unsigned int speed_count;   //占空比计数器
+
+void IRIN_Configuration(void);
+void TIM2_Init(void);
+void GPIOCLK_Init(void);
+
+#endif
+

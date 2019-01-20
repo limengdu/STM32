@@ -24,7 +24,7 @@
 #include "encoder.h"
 #include "usart.h"
 
-extern __IO uint32_t CaptureNumber;
+extern __IO uint32_t CaptureNumber; // 定义全局变量，表示编码器的值
 
 /*******************************************************************************
 * 函 数 名         : delay
@@ -56,19 +56,21 @@ static void delay(void)
 int main(void)
 { 
   
-	DCMOTOR_BRUSH_TIMx_PWM_Init(); //初始化定时器PWM输出
-	TIMx_DCmotor_ENCODER_Init();//初始化编码器捕获，编码器对应TIM3_CH3:PB0引脚
-	DEBUG_USART_Init();
+	DCMOTOR_BRUSH_TIMx_PWM_Init();//初始化定时器PWM输出
+	TIMx_DCmotor_ENCODER_Init();  //初始化编码器捕获，编码器对应TIM3_CH3:PB0引脚
+	DEBUG_USART_Init();           //usart串口初始化
 	
 	printf("编码器测试\n");
 
 	DCMOTOR_25GA370_Contrl(1,1,500);
+	/*电机控制，参数1：通道选择；参数2：正反转控制；
+	            参数3：速度控制（数值越大速度越慢）*/
 
 	while (1)
 	{   
-		delay();
+		delay();                            //小延时
 		printf("freq:%d\n",CaptureNumber);  // 打印编码器捕获值
-		CaptureNumber=0;    // 清零，从零开始计数
+		CaptureNumber=0;                    // 清零，从零开始计数
 	}
 }
 

@@ -20,7 +20,7 @@
 #define ENCODER_TIMx                        TIM3
 #define ENCODER_TIM_APBxClock_FUN           RCC_APB1PeriphClockCmd
 #define ENCODER_TIM_CLK                     RCC_APB1Periph_TIM3
-#define ENCODER_TIM_Period                  0xFFFF                       //定时器重载值
+#define ENCODER_TIM_Period                  0xFFFF           //定时器重载值65535
 #define ENCODER_TIM_Prescaler               (72-1)  
 
 #define ENCODER_TIM_GPIO_APBxClock_FUN      RCC_APB2PeriphClockCmd
@@ -28,14 +28,14 @@
 #define ENCODER_TIM_PORT                    GPIOB
 #define ENCODER_TIM_PIN                     GPIO_Pin_0
 
-#define ENCODER_TIM_Channel_x               TIM_Channel_3                 //通道
+#define ENCODER_TIM_Channel_x               TIM_Channel_3                 //通道3
 #define ENCODER_TIM_IT_CCx                  TIM_IT_CC3
 #define ENCODER_TIM_GetCapturex_FUN         TIM_GetCapture3
 
 #define ENCODER_TIMx_IRQn                   TIM3_IRQn              //中断
 #define ENCODER_TIMx_IRQHandler             TIM3_IRQHandler
 
-#define ENCODER_TIM_ICPolarity              TIM_ICPolarity_Rising          //测量的起始边沿
+#define ENCODER_TIM_ICPolarity              TIM_ICPolarity_Rising //测量的起始边沿
 
 /* 扩展变量 ------------------------------------------------------------------*/
 /* 函数声明 ------------------------------------------------------------------*/

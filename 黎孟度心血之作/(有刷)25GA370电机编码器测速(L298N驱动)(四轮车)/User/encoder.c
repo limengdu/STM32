@@ -1,8 +1,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "encoder.h" 
 
-__IO uint32_t CaptureNumber = 0;
-
 /*******************************************************************************
 * 函 数 名         : ENCODER_TIMx_GPIO_Config
 * 函数功能		   : 初始化定时器TIM3引脚
@@ -64,7 +62,7 @@ static void TIMx_NVIC_Configuration(void)
  */
 /*******************************************************************************
 * 函 数 名         : ENCODER_TIMx_Configuration
-* 函数功能		   : 配置输出PWM的TIM3；输入捕获的TIM5
+* 函数功能		   : 配置输出PWM、输入捕获的TIM3
 * 输    入         : 无
 * 输    出         : 无
 *                             黎孟度心血之作                                   *
@@ -92,18 +90,25 @@ static void ENCODER_TIMx_Configuration(void)
 	
   TIM_TimeBaseInit(ENCODER_TIMx, &TIM_TimeBaseStructure);
 
-  //初始化TIM5输入捕获
+  //初始化TIM3输入捕获
   TIM_ICInitStructure.TIM_Channel     = ENCODER_TIM_Channel_x;
-  //设置输入捕获通道为通道3
+/*设置输入捕获滤波器——TIM_Channel_3
+输入捕获滤波器ICF[3:0]，这个用于设置采样频率和数字滤波器长度。
+其中：fCK_INT是定时器的输入频率，fDTS是根据TIMx_CR1的CKD[1:0]的设置来确定的。
+数字滤波器由一个事件计数器组成，它记录到N个事件后会产生一个输出的跳变。
+也就是说连续N次采样，如果都是高电平，则说明这是一个有效的触发，就会进入输入捕捉中断
+（如果设置了的话）。
+这样就可以滤除那些高电平脉宽低于8个采样周期的脉冲信号，从而达到滤波的作用。
+*/
 
   TIM_ICInitStructure.TIM_ICPolarity  = ENCODER_TIM_ICPolarity;
-  //上升沿捕获
+  //设置输入捕捉极性——上升沿捕获
 
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   //映射到TI1上
 
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
-  //配置输入分频,不分频  
+  //设置输入捕获分频器——不分频（这里设置的是每N个事件触发一次捕捉）
 
   TIM_ICInitStructure.TIM_ICFilter    = 0x00;
   //IC1F=0000 配置输入滤波器 不滤波
@@ -120,27 +125,16 @@ static void ENCODER_TIMx_Configuration(void)
   //使能定时器  
 }
 
-
-/**
-  * 函数功能: TIMx通道1输入捕获初始化
-  * 输入参数: 无
-  * 返 回 值: 无
-  * 说    明：无
-  */
+/*******************************************************************************
+* 函 数 名         : TIMx_DCmotor_ENCODER_Init
+* 函数功能		   : TIM3通道3输入捕获初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void TIMx_DCmotor_ENCODER_Init(void)
 {
-	ENCODER_TIMx_GPIO_Config();
-	ENCODER_TIMx_Configuration();	
+	ENCODER_TIMx_GPIO_Config();    //定时器TIM3引脚配置
+	ENCODER_TIMx_Configuration();  //定时器TIM3输入捕获配置
 }
-
-void ENCODER_TIMx_IRQHandler(void)
-{
- 	if(TIM_GetITStatus(ENCODER_TIMx, ENCODER_TIM_IT_CCx) == SET )     //捕获中断
-	{
-     /* Clear TIM3 Capture compare interrupt pending bit */
-    TIM_ClearITPendingBit(ENCODER_TIMx, ENCODER_TIM_IT_CCx);
-    CaptureNumber++;  // 每来一个上升沿加一
-	}
-}
-
 

@@ -33,7 +33,7 @@
 * 输    出         : 无
 *                             黎孟度心血之作                                   *
 *******************************************************************************/
-int main (void)            //主程序
+int main (void)               //主程序
 {
 	delay_ms(500);            //上电时等待其他器件就绪
 	RCC_Configuration();      //系统时钟初始化 
@@ -47,7 +47,7 @@ int main (void)            //主程序
 	while(1)
 		{
 			//第一种方法实现转动
-		  TIM_SetCompare3(TIM3,1500); //改变比较值TIM3->CCR2达到调节占空比的效果（1500为0度）
+//		  TIM_SetCompare3(TIM3,1500); //改变比较值TIM3->CCR2达到调节占空比的效果（1500为0度）
 //		  TIM_SetCompare3(TIM3,3000); //改变比较值TIM3->CCR2达到调节占空比的效果
 //		  TIM_SetCompare3(TIM3,4500); //改变比较值TIM3->CCR2达到调节占空比的效果
 //		  TIM_SetCompare3(TIM3,7500); //改变比较值TIM3->CCR2达到调节占空比的效果
@@ -55,7 +55,7 @@ int main (void)            //主程序
 			//第二种方法实现转动
 //			SG90_angle(0);
 //			SG90_angle(30);
-//			SG90_angle(60);
+			SG90_angle(60);
 //			SG90_angle(90);
 		}
 }

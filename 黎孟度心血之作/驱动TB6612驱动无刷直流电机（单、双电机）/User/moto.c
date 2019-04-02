@@ -6,7 +6,7 @@
 * 函数功能		   : 驱动tb6612对应电机IO配置
 * 输    入         : 无
 * 输    出         : 无
-* 说    明         ：接线及电机转动状态表：
+* 说    明         ：接线及电机转动状态表（默认状态下注释第二个电机IO）：
 ________________________________________________________________________________
     |  AIN1(PB11)  AIN2(PB12)  PWMA(PA8)   A01       A02       电机转动方向  |
     |  高电平(1)   低电平(0)      1      电机正极  电机负极    正转(顺时针)  |
@@ -27,16 +27,17 @@ void MOTO_Config(void)
   	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 
 //	                              | GPIO_Pin_14 | GPIO_Pin_15
 	                              ;
-	
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;   
 	//设置引脚模式为通用推挽输出
-  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
-	//设置引脚速率为50MHz
-  	GPIO_Init(GPIOB, &GPIO_InitStructure);		  
-	//调用库函数，初始化GPIOB
+  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;   
 
+	//设置引脚速率为50MHz
+  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
+
+	//调用库函数，初始化GPIOB
+  	GPIO_Init(GPIOB, &GPIO_InitStructure);		  
+
+	//低电平，确保初始状态下电机处于停止状态
 	GPIO_SetBits(GPIOB,GPIO_Pin_11 | GPIO_Pin_12);
 //	GPIO_SetBits(GPIOB,GPIO_Pin_14 | GPIO_Pin_15);
-	//低电平，确保初始状态下电机处于停止状态
 }
 

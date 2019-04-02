@@ -1,6 +1,7 @@
-#ifndef __CONTROL_H
-#define __CONTROL_H
+#ifndef CONTROL_H
+#define CONTROL_H
 
+/* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 
 void MOTOR_CONTROL(void);

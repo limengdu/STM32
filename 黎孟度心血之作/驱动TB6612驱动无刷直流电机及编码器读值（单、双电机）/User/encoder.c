@@ -64,7 +64,7 @@ void Encoder_Init_TIM4(void)
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;  //端口配置
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING; //浮空输入
-	GPIO_Init(GPIOB, &GPIO_InitStructure);				  //根据设定参数初始化GPIOB
+	GPIO_Init(GPIOB, &GPIO_InitStructure);				  //根据设定参数初始化PB
 
 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
 	TIM_TimeBaseStructure.TIM_Prescaler = 0x0;            //预分频器 
@@ -99,8 +99,8 @@ int Read_Encoder(u8 TIMX)
 	int Encoder_TIM;    
 	switch(TIMX)
 	 {
-	     case 2:  Encoder_TIM= (short)TIM2 -> CNT;  TIM2 -> CNT=0;break;
-		 case 4:  Encoder_TIM= (short)TIM4 -> CNT;  TIM4 -> CNT=0;break;	
+	     case 2:  Encoder_TIM= (short)TIM2 -> CNT;break;
+		 case 4:  Encoder_TIM= (short)TIM4 -> CNT;break;	
 		 default: Encoder_TIM=0;
 	 }
 	return Encoder_TIM;

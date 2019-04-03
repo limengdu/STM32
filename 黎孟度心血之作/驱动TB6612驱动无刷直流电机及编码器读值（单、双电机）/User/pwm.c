@@ -80,7 +80,12 @@ void PWM_TIMx_Config(void)
 	
 	//当定时器计数值小于CCR1_Val时为低电平
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	
+	//只有TIM1和TIM8才有互补+死区输出!
+	//指定空闲状态下的TIM输出比较的引脚状态：低
 	TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
+	
+	//指定空闲状态下的TIM互补输出比较的引脚状态：低
 	TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset;
 	
 	//初始化定时器通道1输出PWM

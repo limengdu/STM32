@@ -37,11 +37,8 @@ void TIM3_IRQHandler(void)   //TIM3中断
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) 
 	//检查指定的TIM3中断发生与否
 		{
-			Encoder_Left=(short)TIM2->CNT;
-//			Encoder_RIGHT=(short)TIM4->CNT;
-			
-		    TIM2->CNT=0;
-//			TIM4->CNT=0;
+			Encoder_Left=(short)TIM2->CNT;           //将编码器的值赋给变量
+//			Encoder_RIGHT=(short)TIM4->CNT;          //将编码器的值赋给变量
 		}
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIM3的中断待处理位
 }

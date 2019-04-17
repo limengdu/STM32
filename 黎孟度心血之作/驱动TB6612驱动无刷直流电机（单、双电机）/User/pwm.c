@@ -66,8 +66,8 @@ void PWM_TIMx_Config(void)
 	TIM_TimeBaseInit(MOTOR_TIMx, &TIM_TimeBaseStructure);
 
 	//定时器输出通道1模式配置
-	//模式配置：PWM模式2
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM2;
+	//模式配置：PWM模式1
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	
 	//输出状态设置：使能输出
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;	

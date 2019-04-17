@@ -35,7 +35,7 @@ int main(void)
 
 	while(1)
 	{
-		TIM_SetCompare1(MOTOR_TIMx,8000); 
+		TIM_SetCompare1(MOTOR_TIMx,1000); 
 		//使用通道1——CH1(PA8)和互补通道——CH1N(PB13)控制电机（单/双电机）
 		//数值越大，电机速度越快
 	}

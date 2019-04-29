@@ -5,41 +5,88 @@
 #include "pid.h"
 #include "usart.h"
 
+extern int Encoder1;                         //编码器1的脉冲计数
+extern int Encoder2;                         //编码器2的脉冲计数
 
-extern int Encoder_Left;                     //左编码器的脉冲计数
-extern int Encoder_Right;
+int Moto1;                                   //电机1的PWMA
+int Moto2;                                   //电机2的PWMB
 
-int Moto1;
-int Moto2;
-
-int Target_position1=0;              //设定电机1的目标速度
-int Target_position2=20;              //设定电机2的目标速度
+int Target_position1=10;                     //设定电机1的目标速度
+int Target_position2=20;                     //设定电机2的目标速度
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Exceptions Handlers                         */
 /******************************************************************************/
 
-void TIM3_IRQHandler(void)   //TIM3中断
+
+/*******************************************************************************
+* 函 数 名         : TIM2_IRQHandler
+* 函数功能		   : TIM2中断服务函数
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM2_IRQHandler(void)
+{ 		    		  			    
+	if(TIM2->SR&0X0001)//溢出中断
+	{    				   				     	    	
+	}				   
+	TIM2->SR&=~(1<<0);//清除中断标志位 	    
+}
+
+
+/*******************************************************************************
+* 函 数 名         : TIM3_IRQHandler
+* 函数功能		   : TIM3中断服务函数
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM3_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) 
 	//检查指定的TIM3中断发生与否
 		{	
-			Encoder_Left=Read_Encoder(2);           //将编码器的值赋给变量
-			Encoder_Right=Read_Encoder(4);          //将编码器的值赋给变量
+			Encoder1=Read_Encoder(2);           //将编码器1的值赋给变量Encoder1
+			Encoder2=Read_Encoder(4);           //将编码器2的值赋给变量Encoder2
 			
-			Moto1=LocPIDCalc_PID1(Encoder_Left,Target_position1);
+			//电机1
+			//通过位置式PID算法计算出PWMA的值并赋值给变量Moto1
+			Moto1=LocPIDCalc_PID1(Encoder1,Target_position1);
+			//电机正反转控制以及PWMA值传递
 			MOTOR_CONTROL1(Moto1);
+			//限幅，避免计算出过大的PWMA值传递给电机而导致电机损坏
 			Xianfu_Pwm(&Moto1,COMPARE_VALUE);
 			
-			Moto2=LocPIDCalc_PID2(Encoder_Right,Target_position2);
+			//电机2
+			//通过位置式PID算法计算出PWMB的值并赋值给变量Moto2
+			Moto2=LocPIDCalc_PID2(Encoder2,Target_position2);
+			//电机正反转控制以及PWMB值传递
 			MOTOR_CONTROL2(Moto2);
+			//限幅，避免计算出过大的PWMA值传递给电机而导致电机损坏
 			Xianfu_Pwm(&Moto2,COMPARE_VALUE);
 		}
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIM3的中断待处理位
+		TIM_ClearITPendingBit(TIM3, TIM_IT_Update); //清除TIM3的中断待处理位
 }
 
 
-#if EN_USART1   //USART2使用与屏蔽选择
+/*******************************************************************************
+* 函 数 名         : TIM4_IRQHandler
+* 函数功能		   : TIM4中断服务函数
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM4_IRQHandler(void)
+{ 		    		  			    
+	if(TIM4->SR&0X0001)//溢出中断
+	{    				   				     	    	
+	}				   
+	TIM4->SR&=~(1<<0);//清除中断标志位 	    
+}
+
+
+#if EN_USART1   //USART1使用与屏蔽选择
 void USART1_IRQHandler(void)//串口1中断服务程序（固定的函数名不能修改）
 { 	
 	u8 Res;
@@ -123,7 +170,7 @@ void USART2_IRQHandler(void)//串口2中断服务程序（固定的函数名不能修改）
 * 输    出         : 无
 *                             黎孟度心血之作                                   *
 *******************************************************************************/
-#if EN_USART3   //USART2使用与屏蔽选择
+#if EN_USART3   //USART3使用与屏蔽选择
 void USART3_IRQHandler(void)
 { 	
 	u8 Res;
@@ -138,8 +185,6 @@ void USART3_IRQHandler(void)
 	}
 } 
 #endif
-
-
 
 
 /********************** (C) COPYRIGHT 2019 GCUwildwolfteam *********************

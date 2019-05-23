@@ -6,6 +6,8 @@
 ÓÊ    Ïä£º565369157@qq.com
 ---------------------------------------------------------------------------------*/
 #include "task_scheduler.h"
+#include "barrier.h"
+#include "encoder.h"
 	 
 u8 The_Task_Flag;
 extern __IO int32_t PWM_Duty;
@@ -59,6 +61,10 @@ void Task_Start_Scheduler(void)
 						 
 						 #if EN_limengdu_code
 						 Distance();
+						 if(R_encoder_speed > 10 )
+						 {
+							 Ultcontrol(2);
+						 }
 						 #endif
 						 
 						 break;

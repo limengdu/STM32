@@ -572,6 +572,11 @@
               <FilePath>..\User\key.c</FilePath>
             </File>
             <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\pid.c</FilePath>
+            </File>
+            <File>
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\led.c</FilePath>
@@ -590,11 +595,6 @@
               <FileName>oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\pid.c</FilePath>
             </File>
             <File>
               <FileName>show.c</FileName>
@@ -635,6 +635,11 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>barrier.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\barrier.c</FilePath>
             </File>
           </Files>
         </Group>

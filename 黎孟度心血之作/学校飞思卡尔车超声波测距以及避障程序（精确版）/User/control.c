@@ -14,6 +14,7 @@
 #include "key.h"
 #include "tracking.h"
 #include "pid.h"
+#include "barrier.h"
 
 extern bool __Init_flag;
 extern KEY_RELEASE_Status __Key_release_flag;
@@ -33,17 +34,17 @@ extern PID_TypeDef  sPID;
 ---------------------------------------------------------------------------------*/
 void Freescale_Device_Init()
 {
-	Set_Joint_Angle(0);
+	Set_Joint_Angle(-5);
 	__Init_flag = SUCCESS;
 }
 
-/*-------------------------------------------------------------------------------
-函数名称：Freescale_Control_Kernel
-函数描述：飞思卡尔智能车控制核心。
-输入参数：无
-返回参数：无
-备    注：用于整车控制，其系统运行周期取决于TIM7定时器周期。
----------------------------------------------------------------------------------*/
+/*******************************************************************************
+* 函 数 名         : Freescale_Control_Kernel
+* 函数功能		     : 飞思卡尔智能车控制核心——按键启动小车
+* 输    入         : pLocalMemoryList
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void Freescale_Control_Kernel(u8* pLocalMemoryList)
 { 
 #ifdef USE_KEYBOARD
@@ -102,7 +103,7 @@ void Freescale_Control_Kernel(u8* pLocalMemoryList)
 
 #ifdef USE_KEY_PID
 	key = KEY_Scan();
-	if(key == __key_1)																													// KEY1（减速）
+	if(key == __key_1)																													// KEY1（速度1500）
 	{
 		if(__Key_release_flag == REL_SET)
 		{
@@ -113,9 +114,10 @@ void Freescale_Control_Kernel(u8* pLocalMemoryList)
 //				}
 //				__Key_release_flag = UN_REL_SET;
 //			}
-		 __PID_Start_flag = 1;
+//		 __PID_Start_flag = 1;
+			MotorSpeedSetOne(1000);
 	}
-	else if(key == __key_2)																											// KEY2（加速）
+	else if(key == __key_2)																											// KEY2（速度2000）
 	{	 
 //			if(__Key_release_flag == REL_SET)
 //			{
@@ -124,16 +126,18 @@ void Freescale_Control_Kernel(u8* pLocalMemoryList)
 //				{
 //					sPID.SetPoint = 12;
 //				}
-			__Key_release_flag = UN_REL_SET;
-		}
-		__PID_Start_flag = 1;
+//			__Key_release_flag = UN_REL_SET;
+//		}
+//		__PID_Start_flag = 1;
+		MotorSpeedSetOne(600);
 	}
 	else if(key == __key_3)																											// KEY3（停止）
 	{	 
 		if(__Key_release_flag == REL_SET)
 		{
-			sPID.SetPoint = 0;
-			__Key_release_flag = UN_REL_SET;
+//			sPID.SetPoint = 0;
+//			__Key_release_flag = UN_REL_SET;
+			MotorSpeedSetOne(0);
 		}
 	}
 #endif
@@ -142,3 +146,4 @@ void Freescale_Control_Kernel(u8* pLocalMemoryList)
 		Tracking_Control();
 #endif
 }
+	}

@@ -161,7 +161,7 @@ void Chassis_processing(float Vx, float Vy, float VOmega, uint8_t mode){
 	
 	//设定电机电流值
 	M3508_setCurrent(M3508s[0].outCurrent, M3508s[1].outCurrent, M3508s[2].outCurrent, M3508s[3].outCurrent);
-//	M3508_setCurrent(300,0,0,0);
+//	M3508_setCurrent(300,300,300,300);
 }
 
 

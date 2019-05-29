@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    CAN.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   CAN应用函数接口
@@ -11,11 +11,14 @@
   
 #include "CAN.h"
 
-/**
-  * @brief  CAN1快速初始化
-  * @param  None
-  * @retval None
-  */
+
+/*******************************************************************************
+* 函 数 名         : CAN1_QuickInit
+* 函数功能		     : CAN1快速初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void CAN1_QuickInit(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -66,7 +69,6 @@ void CAN1_QuickInit(void)
 	CAN_InitStructure.CAN_Prescaler = CAN1_Prescaler;		   ////BTR-BRP 波特率分频器  定义了时间单元的时间长度 45/(1+3+5)/5=1 Mbps
 	CAN_Init(CAN1, &CAN_InitStructure);
 	
-
 	/*********************CAN筛选器初始化***********************************************/
 	CAN_FilterInitStructure.CAN_FilterNumber = 0;									//筛选器组0
 	CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;					//工作在ID掩码模式
@@ -88,11 +90,14 @@ void CAN1_QuickInit(void)
 	CAN_ITConfig(CAN1, CAN_IT_FMP0, ENABLE);
 }
 
-/**
-  * @brief  CAN2快速初始化
-  * @param  None
-  * @retval None
-  */
+
+/*******************************************************************************
+* 函 数 名         : CAN2_QuickInit
+* 函数功能		     : CAN2快速初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void CAN2_QuickInit(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -143,7 +148,6 @@ void CAN2_QuickInit(void)
 	CAN_InitStructure.CAN_Prescaler = CAN2_Prescaler;		   ////BTR-BRP 波特率分频器  定义了时间单元的时间长度 42/(1+9+4)/3=1 Mbps
 	CAN_Init(CAN2, &CAN_InitStructure);
 	
-
 	/*********************CAN筛选器初始化***********************************************/
 	CAN_FilterInitStructure.CAN_FilterNumber = 14;									//筛选器组0
 	CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdMask;					//工作在ID掩码模式
@@ -166,22 +170,26 @@ void CAN2_QuickInit(void)
 }
 
 	 
-/**
-  * @brief  CAN发送数据
-  * @param  CANx 		CAN编号
-  * 		id_type ·	id类型 CAN_ID_STD， CAN_ID_EXT
-  *			id			id号
-  * 		data[8]		8个数据
-  * @retval None
-  */
+/*******************************************************************************
+* 函 数 名         : CAN_SendData
+* 函数功能		     : CAN发送数据
+* 输    入         : CANx 		CAN编号
+                     id_type ·	id类型 CAN_ID_STD， CAN_ID_EXT
+                     id			id号
+                     data[8]		8个数据
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void CAN_SendData(CAN_TypeDef* CANx, uint8_t id_type, uint32_t id, uint8_t data[8])
 {	  
 	CanTxMsg TxMessage;
 	
-	if(id_type == CAN_Id_Standard){
+	if(id_type == CAN_Id_Standard)
+	{
 		TxMessage.StdId = id;						 
 	}
-	else{
+	else
+	{
 		TxMessage.ExtId = id;					 //ID号
 	}
 	

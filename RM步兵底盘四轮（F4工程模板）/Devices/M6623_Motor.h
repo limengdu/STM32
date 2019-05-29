@@ -1,6 +1,7 @@
 #ifndef __M6623_MOTOR_H
 #define __M6623_MOTOR_H
 
+/* Includes ------------------------------------------------------------------*/
 #include "user_common.h"
 
 #define M6623_READID_START		0x205
@@ -15,4 +16,4 @@ void M6623_calibration(void);
 void M6623_getInfo(CanRxMsg RxMessage);
 void M6623_setTargetAngle(M6623Name_e motorName, int32_t angle);
 
-#endif /* __M6623_MOTOR_H */
+#endif

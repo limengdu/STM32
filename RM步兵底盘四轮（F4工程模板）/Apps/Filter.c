@@ -1,24 +1,26 @@
 /**
   ******************************************************************************
   * @file    Filter.c
-  * @author  Hare
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   滤波器函数接口
   ******************************************************************************
   */
   
-  
+/* Includes ------------------------------------------------------------------*/
 #include "Filter.h"
 
 
-/**
-  * @brief  IIR低通滤波，输入与输出不能是同一个变量
-  * @param[in]  *in 输入数据
-  *				 LpfAttFactor 低通滤波衰减因子 Attenuation should be between 0 to 1.
-  * @param[out]	*out 数据输出
-  * @retval None
-  */
+/*******************************************************************************
+* 函 数 名         : Filter_IIRLPF
+* 函数功能		     : IIR低通滤波，输入与输出不能是同一个变量
+* 输    入         : *in 输入数据
+                     LpfAttFactor 低通滤波衰减因子 Attenuation should be between 0 to 1.
+										 *out 数据输出
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void Filter_IIRLPF(float *in,float *out, float LpfAttFactor)
 {
 	*out = *out + LpfAttFactor*(*in - *out); 

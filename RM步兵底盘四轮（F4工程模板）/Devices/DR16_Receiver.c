@@ -1,14 +1,14 @@
 /**
   ******************************************************************************
   * @file    DR16_Receiver.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   DR16接收机应用函数接口
   ******************************************************************************
   */
-  
-  
+
+/* Includes ------------------------------------------------------------------*/
 #include <Math.h>
 #include "DR16_Receiver.h"
 
@@ -23,37 +23,45 @@ rocker_t pcRocker;
 //ControlStatus_t ControlStatus;
 
 
-/**
-  * @brief  DR16接收机初始化
-  * @param  None
-  * @retval None
-  */
-void DR16_receiverInit(void){
+/*******************************************************************************
+* 函 数 名         : DR16_receiverInit
+* 函数功能		     : DR16接收机初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void DR16_receiverInit(void)
+{
 	USART1_QuickInit(100000);                                         //使用USART1传输接收数据，设置波特率
 	USART1_RXDMA_Config((uint32_t)DR16_rxBuff, DR16_DBUS_PACKSIZE+2);	//+2保证安全
   //设置传输地址和数据大小
 }
 
 
-/**
-  * @brief  产生X，Y坐标
-  * @param  posX posY 键盘或遥控的X Y数值
-  * @retval None
-  */
-void Rocker_getData(float posX, float posY, rocker_t *roc){
+/*******************************************************************************
+* 函 数 名         : DR16_receiverInit
+* 函数功能		     : 产生X，Y坐标
+* 输    入         : posX posY 键盘或遥控的X Y数值/ *roc
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void Rocker_getData(float posX, float posY, rocker_t *roc)
+{
 	roc->x = posX;
 	roc->y = posY;
 	roc->radian = atan2(roc->y, roc->x);
-
 }
 
 
-/**
-  * @brief  DR16接收数据处理
-  * @param  pData			接收buff数据指针
-  * @retval None
-  */
-void DR16_dataProcess(uint8_t *pData){
+/*******************************************************************************
+* 函 数 名         : DR16_dataProcess
+* 函数功能		     : DR16接收数据处理
+* 输    入         : pData			接收buff数据指针
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void DR16_dataProcess(uint8_t *pData)
+{
 	if (pData == NULL)
 	{
 		return;
@@ -94,9 +102,7 @@ void DR16_dataProcess(uint8_t *pData){
 	
 	Rocker_getData(dr16_data.rc.ch2, dr16_data.rc.ch3, &dr16_rocker_L);
 	Rocker_getData(dr16_data.rc.ch0, dr16_data.rc.ch1, &dr16_rocker_R);
-	
-		
-	}
+}
 	
 	
 	

@@ -1,21 +1,27 @@
 /**
   ******************************************************************************
   * @file    LED.c
-  * @author  Hare
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   LED应用函数接口
   ******************************************************************************
   */
   
-  
+
+/* Includes ------------------------------------------------------------------*/
 #include "LED.h"
 
 
-
+/*******************************************************************************
+* 函 数 名         : LED_GPIO_Config
+* 函数功能		     : LED初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void LED_GPIO_Config(void)
 {
-
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOG, ENABLE);
@@ -28,6 +34,4 @@ void LED_GPIO_Config(void)
 	
 	GPIO_Init(GPIOG, &GPIO_InitStruct);	
 	GPIO_SetBits(GPIOG,LED_Pin);
-
-
 }

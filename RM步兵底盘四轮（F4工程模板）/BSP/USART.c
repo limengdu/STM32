@@ -1,14 +1,15 @@
 /**
   ******************************************************************************
   * @file    USART.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   USART应用函数接口
   ******************************************************************************
   */
   
-  
+
+/* Includes ------------------------------------------------------------------*/
 #include "USART.h"
 
 static USART_TypeDef* Using_USART = USART2;
@@ -17,14 +18,15 @@ char USART2_buff[USART2_BUFFLEN];
 uint8_t USART2_Pointer = 0;
 
 
-
-/**
-  * @brief  USART1快速初始化
-  * @param  USART_BaudRate 	波特率设置
-  * @retval None
-  * @Using 	用于接收DR16接收机Dbus数据
-  */
-void USART1_QuickInit(uint32_t USART_BaudRate){
+/*******************************************************************************
+* 函 数 名         : USART1_QuickInit
+* 函数功能		     : USART1快速初始化(用于接收DR16接收机Dbus数据)
+* 输    入         : USART_BaudRate 	波特率设置
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART1_QuickInit(uint32_t USART_BaudRate)
+{
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	/* 使能 GPIO 时钟 */
@@ -82,13 +84,16 @@ void USART1_QuickInit(uint32_t USART_BaudRate){
 	USART_Cmd(USART1, ENABLE);
 }
 
-/**
-  * @brief  USART2快速初始化
-  * @param  USART_BaudRate 	波特率设置
-  * @retval None
-  * @Using 	用于pc端发送，接收调试信息
-  */
-void USART2_QuickInit(uint32_t USART_BaudRate){
+
+/*******************************************************************************
+* 函 数 名         : USART2_QuickInit
+* 函数功能		     : USART2快速初始化(用于pc端发送，接收调试信息)
+* 输    入         : USART_BaudRate 	波特率设置
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART2_QuickInit(uint32_t USART_BaudRate)
+{
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	/* 使能 GPIO 时钟 */
@@ -146,13 +151,16 @@ void USART2_QuickInit(uint32_t USART_BaudRate){
 	USART_Cmd(USART2, ENABLE);
 }
 
-/**
-  * @brief  USART3快速初始化
-  * @param  USART_BaudRate 	波特率设置
-  * @retval None
-  * @Using 	用于pc端发送，接收调试信息
-  */
-void USART3_QuickInit(uint32_t USART_BaudRate){
+
+/*******************************************************************************
+* 函 数 名         : USART3_QuickInit
+* 函数功能		     : USART3快速初始化(用于pc端发送，接收调试信息)
+* 输    入         : USART_BaudRate 	波特率设置
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART3_QuickInit(uint32_t USART_BaudRate)
+{
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	/* 使能 GPIO 时钟 */
@@ -209,13 +217,17 @@ void USART3_QuickInit(uint32_t USART_BaudRate){
 	/* 使能串口 */
 	USART_Cmd(USART3, ENABLE);
 }
-/**
-  * @brief  USART6快速初始化
-  * @param  USART_BaudRate 	波特率设置
-  * @retval None
-  * @Using 	用于接收裁判系统数据
-  */
-void USART6_QuickInit(uint32_t USART_BaudRate){
+
+
+/*******************************************************************************
+* 函 数 名         : USART6_QuickInit
+* 函数功能		     : USART6快速初始化(用于接收裁判系统数据)
+* 输    入         : USART_BaudRate 	波特率设置
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART6_QuickInit(uint32_t USART_BaudRate)
+{
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
 	/* 使能 GPIO 时钟 */
@@ -274,11 +286,13 @@ void USART6_QuickInit(uint32_t USART_BaudRate){
 }
 
 
-/**
-  * @brief  USART1 RX DMA 配置，外设到内存(USART1->DR)
-  * @param  USART1_DMABuff_addr		DMA目标存储地址
-  * @retval 无
-  */
+/*******************************************************************************
+* 函 数 名         : USART1_RXDMA_Config
+* 函数功能		     : USART1 RX DMA 配置，外设到内存(USART1->DR)
+* 输    入         : USART1_DMABuff_addr		DMA目标存储地址
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void USART1_RXDMA_Config(uint32_t USART1_DMABuff_addr, uint32_t buffsize)
 {
 	DMA_InitTypeDef DMA_InitStructure;
@@ -333,15 +347,17 @@ void USART1_RXDMA_Config(uint32_t USART1_DMABuff_addr, uint32_t buffsize)
 	}
   
 	//使能DMA接收  
-	USART_DMACmd(USART1,USART_DMAReq_Rx,ENABLE); 
-  
+	USART_DMACmd(USART1,USART_DMAReq_Rx,ENABLE);  
 }
 
-/**
-  * @brief  USART2 RX DMA 配置，外设到内存(USART2->DR)
-  * @param  USART2_DMABuff_addr		DMA目标存储地址
-  * @retval 无
-  */
+
+/*******************************************************************************
+* 函 数 名         : USART2_RXDMA_Config
+* 函数功能		     : USART2 RX DMA 配置，外设到内存(USART2->DR)
+* 输    入         : USART2_DMABuff_addr		DMA目标存储地址
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void USART2_RXDMA_Config(uint32_t USART2_DMABuff_addr, uint32_t buffsize)
 {
 	DMA_InitTypeDef DMA_InitStructure;
@@ -397,14 +413,16 @@ void USART2_RXDMA_Config(uint32_t USART2_DMABuff_addr, uint32_t buffsize)
   
 	//使能DMA接收  
 	USART_DMACmd(USART2,USART_DMAReq_Rx,ENABLE); 
-  
 }
 
-/**
-  * @brief  USART3 RX DMA 配置，外设到内存(USART3->DR)
-  * @param  USART3_DMABuff_addr		DMA目标存储地址
-  * @retval 无
-  */
+
+/*******************************************************************************
+* 函 数 名         : USART3_RXDMA_Config
+* 函数功能		     : USART3 RX DMA 配置，外设到内存(USART3->DR)
+* 输    入         : USART3_DMABuff_addr		DMA目标存储地址
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void USART3_RXDMA_Config(uint32_t USART3_DMABuff_addr, uint32_t buffsize)
 {
 	DMA_InitTypeDef DMA_InitStructure;
@@ -460,14 +478,16 @@ void USART3_RXDMA_Config(uint32_t USART3_DMABuff_addr, uint32_t buffsize)
   
 	//使能DMA接收  
 	USART_DMACmd(USART3,USART_DMAReq_Rx,ENABLE); 
-  
 }
 
-/**
-  * @brief  USART6 RX DMA 配置，外设到内存(USART6->DR)
-  * @param  USART6_DMABuff_addr		DMA目标存储地址
-  * @retval 无
-  */
+
+/*******************************************************************************
+* 函 数 名         : USART6_RXDMA_Config
+* 函数功能		     : USART6 RX DMA 配置，外设到内存(USART6->DR)
+* 输    入         : USART6_DMABuff_addr		DMA目标存储地址
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void USART6_RXDMA_Config(uint32_t USART6_DMABuff_addr, uint32_t buffsize)
 {
 	DMA_InitTypeDef DMA_InitStructure;
@@ -479,7 +499,8 @@ void USART6_RXDMA_Config(uint32_t USART6_DMABuff_addr, uint32_t buffsize)
 	DMA_DeInit(USART6_RX_DMA_STREAM);
 
 	/* 确保DMA数据流复位完成 */
-	while(DMA_GetCmdStatus(USART6_RX_DMA_STREAM) != DISABLE){
+	while(DMA_GetCmdStatus(USART6_RX_DMA_STREAM) != DISABLE)
+	{
 	}
 
 	/*usart2 rx对应dma1，通道4，数据流5*/	
@@ -518,22 +539,25 @@ void USART6_RXDMA_Config(uint32_t USART6_DMABuff_addr, uint32_t buffsize)
 	DMA_Cmd(USART6_RX_DMA_STREAM, ENABLE);
   
 	/* 等待DMA数据流有效*/
-	while(DMA_GetCmdStatus(USART6_RX_DMA_STREAM) != ENABLE){
+	while(DMA_GetCmdStatus(USART6_RX_DMA_STREAM) != ENABLE)
+	{
 	}
   
 	//使能DMA接收  
 	USART_DMACmd(USART6,USART_DMAReq_Rx,ENABLE); 
-  
 }
 
 
-/**
-  * @brief  USART发送一个字符
-  * @param  USARTx 	USART外设
-  *			ch 		字符
-  * @retval None
-  */
-void USART_sendChar(USART_TypeDef* USARTx, char ch){
+/*******************************************************************************
+* 函 数 名         : USART_sendChar
+* 函数功能		     : USART发送一个字符
+* 输    入         : USARTx 	USART外设
+                     ch 		字符
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART_sendChar(USART_TypeDef* USARTx, char ch)
+{
 	/* 发送一个字节数据到串口 */
 	USART_SendData(USARTx, (uint8_t) ch);
 	
@@ -541,16 +565,27 @@ void USART_sendChar(USART_TypeDef* USARTx, char ch){
 	while (USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);	
 }
 
-/**
-  * @brief  USART使用printf，scanf端口设置
-  * @param  USARTx 	USART外设
-  * @retval None
-  */
-void USART_setPort(USART_TypeDef* USARTx){
+
+/*******************************************************************************
+* 函 数 名         : USART_setPort
+* 函数功能		     : USART使用printf，scanf端口设置
+* 输    入         : USARTx 	USART外设
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void USART_setPort(USART_TypeDef* USARTx)
+{
 	Using_USART = USARTx;
 }
 
-///重定向c库函数printf到串口，重定向后可使用printf函数
+
+/*******************************************************************************
+* 函 数 名         : fputc
+* 函数功能		     : 重定向c库函数printf到串口，重定向后可使用printf函数
+* 输    入         : ch/ *f
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 int fputc(int ch, FILE *f)
 {
 		/* 发送一个字节数据到串口 */
@@ -562,7 +597,14 @@ int fputc(int ch, FILE *f)
 		return (ch);
 }
 
-///重定向c库函数scanf到串口，重写向后可使用scanf、getchar等函数
+
+/*******************************************************************************
+* 函 数 名         : fgetc
+* 函数功能		     : 重定向c库函数scanf到串口，重写向后可使用scanf、getchar等函数
+* 输    入         : *f
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 int fgetc(FILE *f)
 {
 		/* 等待串口输入数据 */

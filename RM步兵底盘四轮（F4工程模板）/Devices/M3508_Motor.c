@@ -1,29 +1,34 @@
 /**
   ******************************************************************************
   * @file    M3508_Motor.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   M3508无刷电机，配套C620电调驱动应用函数接口
   ******************************************************************************
   */
 
-
+/* Includes ------------------------------------------------------------------*/
 #include "M3508_Motor.h"
 
 M3508s_t M3508s[4];
 
 
-/**
-  * @brief  设置M3508电机电流值（id号为1~4）
-  * @param  iqx (x:1~4) 对应id号电机的电流值，范围-16384~0~16384
-  * @retval None
-  */
-void M3508_setCurrent(int16_t iq1, int16_t iq2, int16_t iq3, int16_t iq4){
+/*******************************************************************************
+* 函 数 名         : M3508_setCurrent
+* 函数功能		     : 设置M3508电机电流值（id号为1~4），M3508电机只要有电流值就可以转动
+* 输    入         : iq1/iq2/iq3/iq4
+* 输    出         : 无
+* 说    明         : iqx(x:1~4)对应id号电机的电流值，电流值的范围-16384~0~16384
+
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void M3508_setCurrent(int16_t iq1, int16_t iq2, int16_t iq3, int16_t iq4)
+{
 
 	uint8_t data[8];
 	
-	//数据格式详见说明书P32
+	//数据格式详见M3508说明书P32
 	data[0] = iq1 >> 8;
 	data[1] = iq1;
 	data[2] = iq2 >> 8;
@@ -34,17 +39,18 @@ void M3508_setCurrent(int16_t iq1, int16_t iq2, int16_t iq3, int16_t iq4){
 	data[7] = iq4;
 	
 	CAN_SendData(CAN1, CAN_ID_STD, M3508_SENDID, data);
-	
 }	
 
 
-
-/**
-  * @brief  从CAN报文中获取M3508电机信息
-  * @param  RxMessage 	CAN报文接收结构体
-  * @retval None
-  */
-void M3508_getInfo(CanRxMsg RxMessage){
+/*******************************************************************************
+* 函 数 名         : M3508_getInfo
+* 函数功能		     : 从CAN报文中获取M3508电机信息
+* 输    入         : RxMessage：CAN报文接收结构体
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void M3508_getInfo(CanRxMsg RxMessage)
+{
 	//报文id确认
 	if((RxMessage.StdId < M3508_READID_START) || (RxMessage.StdId > M3508_READID_END))
 		return;

@@ -1,24 +1,43 @@
 /**
   ******************************************************************************
   * @file    PID.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   PID功能函数
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "PID.h"
+
 int Test_I=0;
 
-void abs_limit(float *a, float ABS_MAX){
+/*******************************************************************************
+* 函 数 名         : abs_limit
+* 函数功能		     : 绝对值函数
+* 输    入         : *a/ABS_MAX
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void abs_limit(float *a, float ABS_MAX)
+{
     if(*a > ABS_MAX)
         *a = ABS_MAX;
     if(*a < -ABS_MAX)
         *a = -ABS_MAX;
 }
 
-void IncrementalPID_paraReset(incrementalpid_t *pid_t, float kp, float ki, float kd, uint32_t MaxOutput, uint32_t IntegralLimit){
+
+/*******************************************************************************
+* 函 数 名         : IncrementalPID_paraReset
+* 函数功能		     : 增量式PID初始化配置函数
+* 输    入         : *pid_t/kp/ki/kd/MaxOutput/IntegralLimit
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void IncrementalPID_paraReset(incrementalpid_t *pid_t, float kp, float ki, float kd, uint32_t MaxOutput, uint32_t IntegralLimit)
+{
 	pid_t->Target = 0;
 	pid_t->Measured = 0;
 	pid_t->err = 0;
@@ -32,7 +51,16 @@ void IncrementalPID_paraReset(incrementalpid_t *pid_t, float kp, float ki, float
 	pid_t->pwm = 0; 			
 }
 
-void IncrementalPID_setPara(incrementalpid_t *pid_t, float kp, float ki, float kd){
+
+/*******************************************************************************
+* 函 数 名         : IncrementalPID_setPara
+* 函数功能		     : 增量式PID初始化配置函数
+* 输    入         : *pid_t/kp/ki/kd
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void IncrementalPID_setPara(incrementalpid_t *pid_t, float kp, float ki, float kd)
+{
 	pid_t->err = 0;
 	pid_t->err_last = 0;
 	pid_t->err_beforeLast = 0;
@@ -43,7 +71,15 @@ void IncrementalPID_setPara(incrementalpid_t *pid_t, float kp, float ki, float k
 }
 
 
-float Incremental_PID(incrementalpid_t *pid_t, float target, float measured) {
+/*******************************************************************************
+* 函 数 名         : Incremental_PID
+* 函数功能		     : 增量式PID
+* 输    入         : *pid_t/target/measured
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+float Incremental_PID(incrementalpid_t *pid_t, float target, float measured) 
+{
 	float p_out, i_out, d_out;
 	pid_t->Target = target;
 	pid_t->Measured = measured;
@@ -71,7 +107,16 @@ float Incremental_PID(incrementalpid_t *pid_t, float target, float measured) {
 	return pid_t->pwm;
 }
 
-void PositionPID_paraReset(positionpid_t *pid_t, float kp, float ki, float kd, uint32_t MaxOutput, uint32_t IntegralLimit){
+
+/*******************************************************************************
+* 函 数 名         : PositionPID_paraReset
+* 函数功能		     : 位置式PID初始化配置函数
+* 输    入         : *pid_t/kp/ki/kd/MaxOutput/IntegralLimit
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void PositionPID_paraReset(positionpid_t *pid_t, float kp, float ki, float kd, uint32_t MaxOutput, uint32_t IntegralLimit)
+{
 	pid_t->Target = 0;
 	pid_t->Measured = 0;
 	pid_t->MaxOutput = MaxOutput;
@@ -85,7 +130,16 @@ void PositionPID_paraReset(positionpid_t *pid_t, float kp, float ki, float kd, u
 	pid_t->pwm = 0; 			
 }
 
-void PositionPID_setPara(positionpid_t *pid_t, float kp, float ki, float kd){
+
+/*******************************************************************************
+* 函 数 名         : PositionPID_setPara
+* 函数功能		     : 位置式PID初始化配置函数
+* 输    入         : *pid_t/kp/ki/kd
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void PositionPID_setPara(positionpid_t *pid_t, float kp, float ki, float kd)
+{
 	pid_t->err = 0;
 	pid_t->err_last = 0;
 	pid_t->integral_err = 0;
@@ -96,7 +150,15 @@ void PositionPID_setPara(positionpid_t *pid_t, float kp, float ki, float kd){
 }
 
 
-float Position_PID(positionpid_t *pid_t, float target, float measured) {
+/*******************************************************************************
+* 函 数 名         : Position_PID
+* 函数功能		     : 位置式PID
+* 输    入         : *pid_t/target/measured
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+float Position_PID(positionpid_t *pid_t, float target, float measured) 
+{
 	float p_out, i_out, d_out;
 	pid_t->Target = (float)target;
 	pid_t->Measured = (float)measured;
@@ -112,6 +174,7 @@ float Position_PID(positionpid_t *pid_t, float target, float measured) {
 	i_out = pid_t->Ki*pid_t->integral_err;
 	d_out = pid_t->Kd*(pid_t->err - pid_t->err_last);
 	Test_I=i_out;
+	
 	//积分限幅
 	abs_limit(&i_out, pid_t->IntegralLimit);
 	
@@ -121,8 +184,6 @@ float Position_PID(positionpid_t *pid_t, float target, float measured) {
 	abs_limit(&pid_t->pwm, pid_t->MaxOutput);
 	
 	pid_t->err_last = pid_t->err;
-	
-    
 	
 	return pid_t->pwm;
 }

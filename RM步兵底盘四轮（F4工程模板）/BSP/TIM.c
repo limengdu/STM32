@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    TIM.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   TIM应用函数接口
@@ -10,21 +10,26 @@
 
 #include "TIM.h"
 
-//TIM_SetComparex_f *const TIM_SetComparex[4] = {
+//TIM_SetComparex_f *const TIM_SetComparex[4] = 
+//{
 //	TIM_SetCompare1,
 //	TIM_SetCompare2,
 //	TIM_SetCompare3,
 //	TIM_SetCompare4
 //};
 
-/**
-  * @brief  基本定时器TIM6作为计数模式初始化
-  * @param  prescaler 				时钟预分频
-  *			period					定时器重装载寄存器的值
-  *			定时器定时频率：系统时钟频率/预分频/重装载值
-  * @retval None
-  */
-void TIM6_CounterMode(u16 prescaler, u16 period){
+
+/*******************************************************************************
+* 函 数 名         : TIM6_CounterMode
+* 函数功能		     : 基本定时器TIM6作为计数模式初始化
+* 输    入         : prescaler 				时钟预分频
+                     period					定时器重装载寄存器的值
+                     定时器定时频率：系统时钟频率/预分频/重装载值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM6_CounterMode(u16 prescaler, u16 period)
+{
 	//使能定时器时钟
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
   
@@ -46,19 +51,20 @@ void TIM6_CounterMode(u16 prescaler, u16 period){
 	TIM_Cmd(TIM6, ENABLE);
 	TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
 	NVIC_Config(TIM6_DAC_IRQn, 1, 0);
-	
 }
 
 
-
-/**
-  * @brief  基本定时器TIM7作为计数模式初始化
-  * @param  prescaler 				时钟预分频
-  *			period					定时器重装载寄存器的值
-  *			定时器定时频率：系统时钟频率/预分频/重装载值
-  * @retval None
-  */
-void TIM7_CounterMode(u16 prescaler, u16 period){
+/*******************************************************************************
+* 函 数 名         : TIM7_CounterMode
+* 函数功能		     : 基本定时器TIM7作为计数模式初始化
+* 输    入         : prescaler 				时钟预分频
+                     period					定时器重装载寄存器的值
+                     定时器定时频率：系统时钟频率/预分频/重装载值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM7_CounterMode(u16 prescaler, u16 period)
+{
 	//使能定时器时钟
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
   
@@ -80,17 +86,18 @@ void TIM7_CounterMode(u16 prescaler, u16 period){
 	TIM_Cmd(TIM7, ENABLE);
 	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
 	NVIC_Config(TIM7_IRQn, 0, 1);
-	
 }
 
 
-
-/**
-  * @brief  TIM12_GPIO初始化
-  * @param  None
-  * @retval None
-  */
-static void TIM12_GPIOInit(void){
+/*******************************************************************************
+* 函 数 名         : TIM12_GPIOInit
+* 函数功能		     : TIM12_GPIO初始化
+* 输    入         : 无
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+static void TIM12_GPIOInit(void)
+{
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(TIM12_CH1_GPIO_CLK | TIM12_CH2_GPIO_CLK, ENABLE);
@@ -114,16 +121,18 @@ static void TIM12_GPIOInit(void){
 }
 
 
-
-/**
-  * @brief  TIM12作为PWM输出初始化
-  * @param  prescaler 	时钟预分频
-  *			period		定时器重装载寄存器的值
-  *			Pulse		占空比，最大为重装载的值
-  *			定时器定时频率：系统时钟频率/预分频/重装载值
-  * @retval None
-  */
-void TIM12_PWMOutput(u16 prescaler, u16 period, u16 Pulse){
+/*******************************************************************************
+* 函 数 名         : TIM12_PWMOutput
+* 函数功能		     : TIM12作为PWM输出初始化
+* 输    入         : prescaler 	时钟预分频
+                     period		定时器重装载寄存器的值
+                     Pulse		占空比，最大为重装载的值
+                     定时器定时频率：系统时钟频率/预分频/重装载值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
+void TIM12_PWMOutput(u16 prescaler, u16 period, u16 Pulse)
+{
 	//IO初始化
 	TIM12_GPIOInit();
 	

@@ -1,24 +1,26 @@
 /**
   ******************************************************************************
   * @file    ANO.c
-  * @author  Liang Yuhao
+  * @author  Li MengDu
   * @version V1.0
   * @date    
   * @brief   DR16接收机应用函数接口
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
 #include "ANO.h"
 
 int8_t send_buf[15]= {0};
 
 
-/**
-  * @brief  匿名上位机V1版本，采用规定通道输出
-  * @param[in]   四个需要发送的数值
-  * @retval None
-  */
-
+/*******************************************************************************
+* 函 数 名         : ANO_Send_Data_V1
+* 函数功能		     : 匿名上位机V1版本，采用规定通道输出
+* 输    入         : Temp_Target1/Temp_Now1/Temp_Target2/Temp_Now2四个需要发送的数值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void ANO_Send_Data_V1(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target2,int16_t Temp_Now2)
 {
 	int8_t data_sum=0;
@@ -38,21 +40,27 @@ void ANO_Send_Data_V1(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target
 	send_buf[12]=Temp_Now2;
 	for(i=0;i<13;i++)
 	{
-	data_sum+=send_buf[i];
+		data_sum+=send_buf[i];
 	}
 	send_buf[13]=data_sum;
 	for(i=0;i<14;i++)
 	{
-	USART_sendChar(USART2,send_buf[i]);
+		USART_sendChar(USART2,send_buf[i]);
 	}
-
 }
 
 /**
-  * @brief  匿名上位机V2版本，采用规定通道输出
-  * @param[in]   四个需要发送的数值
+  * @brief  
+  * @param[in]   
   * @retval None
   */
+/*******************************************************************************
+* 函 数 名         : ANO_Send_Data_V2
+* 函数功能		     : 匿名上位机V2版本，采用规定通道输出
+* 输    入         : Temp_Target1/Temp_Now1/Temp_Target2/Temp_Now2四个需要发送的数值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void ANO_Send_Data_V2(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target2,int16_t Temp_Now2)
 {
 	int8_t data_sum=0;
@@ -73,22 +81,28 @@ void ANO_Send_Data_V2(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target
 	send_buf[4]=cout-5;
 	for(i=0;i<cout;i++)
 	{
-	data_sum+=send_buf[i];
+		data_sum+=send_buf[i];
 	}
 	send_buf[cout++]=data_sum;
 	
 	for(i=0;i<cout;i++)
 	{
-	USART_sendChar(USART2,send_buf[i]);
+		USART_sendChar(USART2,send_buf[i]);
 	}
-
 }
 
 /**
-  * @brief  匿名上位机V3版本，采用规定通道输出
-  * @param[in]   四个需要发送的数值
+  * @brief  
+  * @param[in]   
   * @retval None
   */
+/*******************************************************************************
+* 函 数 名         : ANO_Send_Data_V3
+* 函数功能		     : 匿名上位机V3版本，采用规定通道输出
+* 输    入         : Temp_Target1/Temp_Now1/Temp_Target2/Temp_Now2四个需要发送的数值
+* 输    出         : 无
+*                             黎孟度心血之作                                   *
+*******************************************************************************/
 void ANO_Send_Data_V3(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target2,int16_t Temp_Now2)
 {
   int8_t data_sum=0;
@@ -109,16 +123,13 @@ void ANO_Send_Data_V3(int16_t Temp_Target1,int16_t Temp_Now1,int16_t Temp_Target
 	send_buf[4]=cout-5;
 	for(i=0;i<cout;i++)
 	{
-	data_sum+=send_buf[i];
+		data_sum+=send_buf[i];
 	}
 	send_buf[cout++]=data_sum;
 	
 	for(i=0;i<cout;i++)
 	{
-	USART_sendChar(USART2,send_buf[i]);
+		USART_sendChar(USART2,send_buf[i]);
 	}
-
-
-
 }
 
